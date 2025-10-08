@@ -1,22 +1,55 @@
 import java.util.List;
 import java.util.ArrayList;
-import java.util.HashMap;
 
 public class Main {
+
     public static void main(String[] args) {
-        List<CharacterSheet> charList = CharacterSheet.createChar();
+        // Création du joueur une seule fois
+        CharacterSheet player = CharacterSheet.Character().get(0);
+
+        // Lancer plusieurs combats si tu veux
+        StartBattle(player);
+        StartBattle(player);
+        // player conservera son XP et son niveau
+    }
+
+    public static class GameState {
+        List<CharacterSheet> charList;
+        List<Item> items;
+        Inventory playerInventory;
+        ArrayList<Monster> bestiary;
+
+        public GameState(List<CharacterSheet> charList, List<Item> items, Inventory inv, ArrayList<Monster> bestiary) {
+            this.charList = charList;
+            this.items = items;
+            this.playerInventory = inv;
+            this.bestiary = bestiary;
+        }
+    }
+
+    public static GameState InitializeGame(CharacterSheet player) {
+        List<CharacterSheet> charList = new ArrayList<>();
+        charList.add(player);
         List<Item> items = Item.createItems();
-        Inventory invPerso = charList.get(0).inventory;
-        ArrayList<Item> allItems = invPerso.itemLoop();
-        Item spear = Item.createItems().get(0);
+        Inventory invPerso = player.inventory;
+        Monster.initBestiary();
+        return new GameState(charList, items, invPerso, Monster.Bestiary);
+    }
+
+    public static void StartBattle(CharacterSheet player) {
+        // GameState
+        GameState state = Main.InitializeGame(player);
+
+        // Initialiser encounter en passant le joueur et le state
+        Encounter encounter = new Encounter(player, state);
+
+        // Lancer le combat
+        String result = encounter.combat();
+
+        // Afficher le résultat et les infos du joueur
+        System.out.println(result);
+        player.getLvlInf();
 
 
-
-        charList.get(0).inventory.addItem(spear);
-        charList.get(0).inventory.addItem(spear);
-        charList.get(0).inventory.showInventory();
-        charList.get(0).inventory.checkWeight();
     }
 }
-
-

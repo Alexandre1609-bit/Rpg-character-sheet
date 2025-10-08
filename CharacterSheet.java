@@ -1,45 +1,88 @@
 import java.util.ArrayList;
 import java.util.List;
-import java.util.HashMap;
+import java.util.Scanner;
 
 public class CharacterSheet {
-    String pseudo;
-    String race;
-    String classe;
-    int maxWeight;
-    int ID;
-    int hp;
-    int max_hp;
-    int attack;
-    int max_attack;
-    int defense;
-    int max_defense;
-    int luck;
-    int agility;
+    String name;
+    int health;
+    int damage;
+    boolean dead;
     Inventory inventory;
+    int xp;
+    int level;
 
-    public CharacterSheet(String pseudo, String race, String classe, int maxWeight, int ID, int hp, int max_hp, int attack, int max_attack, int defense, int max_defense, int luck, int agility) {
-        this.pseudo = pseudo;
-        this.race = race;
-        this.classe = classe;
-        this.maxWeight = maxWeight;
-        this.ID = ID;
-        this.hp = hp;
-        this.max_hp = max_hp;
-        this.attack = attack;
-        this.max_attack = max_attack;
-        this.defense = defense;
-        this.max_defense = max_defense;
-        this.luck = luck;
-        this.agility = agility;
-        this.inventory = new Inventory(ID);
+    // Instance statique pour garder le même joueur en mémoire
+    private static CharacterSheet savedPlayer = null;
 
+    // Constructeur
+    public CharacterSheet(String name, int health, int damage, boolean dead, int xp, int level) {
+        this.name = name;
+        this.health = health;
+        this.damage = damage;
+        this.dead = dead;
+        this.inventory = new Inventory(0);
+        this.xp = xp;
+        this.level = level;
     }
 
-    public static List<CharacterSheet> createChar() {
+    // Méthode pour créer/récupérer le joueur
+    public static List<CharacterSheet> Character() {
         List<CharacterSheet> charList = new ArrayList<>();
-        charList.add(new CharacterSheet("Ainz", "Undead", "Mage",  20, 100, 100, 5, 10, 2, 5, 5, 5,5));
+
+        // Si le joueur existe déjà, on le reprend
+        if (savedPlayer != null) {
+            charList.add(savedPlayer);
+        } else {
+            // sinon on le crée une seule fois
+            savedPlayer = new CharacterSheet("Alex", 100, 7, false, 0, 1);
+            charList.add(savedPlayer);
+        }
+
         return charList;
     }
 
+    // === Getters / Setters ===
+    public boolean isDead() { return dead; }
+    public void setDead(boolean dead) { this.dead = dead; }
+
+    public int getHealth() { return health; }
+    public void setHealth(int health) { this.health = health; }
+
+    public int getDamage() { return damage; }
+    public void setDamage(int damage) { this.damage = damage; }
+
+    // === Attaque ===
+    public void attack(Monster target, int damage, String itemName) {
+        System.out.println(this.name + " utilise " + itemName + " !");
+        target.health -= this.damage;
+        if (target.health <= 0) {
+            target.dead = true;
+            System.out.println(target.name + " is dead");
+        } else {
+            System.out.println("The remaining life of " + target.name + " is " + target.health);
+        }
+    }
+
+    public String toString() {
+        return name;
+    }
+
+    // === Gestion du niveau ===
+    public void gainLevel() {
+        int base = 100;
+        int xpNeeded = base + (this.level * 50);
+
+        while (this.xp >= xpNeeded) {
+            this.xp -= xpNeeded;
+            this.level++;
+            System.out.println("You've gained a level! You are now level " + this.level + "!");
+            System.out.println("You can pick a new item!");
+
+            xpNeeded = base + (this.level * 50);
+        }
+    }
+
+    public void getLvlInf() {
+        System.out.println("You are currently level " + this.level + " and have " + this.xp + " xp");
+    }
 }

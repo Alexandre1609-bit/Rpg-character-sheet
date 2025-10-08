@@ -1,5 +1,6 @@
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Scanner;
 
 public class Inventory {
     public int ID;
@@ -21,13 +22,6 @@ public class Inventory {
     }
 
     public void addItem(Item item) {
-        for (Item i : items) {
-            if (i.itemName.equals(item.itemName)) {
-                i.quantity += 1;
-                return;
-            }
-        }
-        item.quantity = 1;
         items.add(item);
     }
 
@@ -49,7 +43,7 @@ public class Inventory {
 
         for (Item item : items) {
             if (map.containsKey(item.itemName)) {
-                map.get(item.itemName).quantity += item.quantity;
+                map.get(item.itemName);
             }
             else {
                 map.put(item.itemName, item);
@@ -57,17 +51,9 @@ public class Inventory {
         }
 
         for (Item item : map.values()) {
-            System.out.println(item.itemName + " (" + item.type + ", " + item.value + ", " + item.weight + ") x" + item.quantity);
+            System.out.println(item.itemName);
         }
     }
 
-    public void checkWeight() {
-        int totalWeight = 0;
-        for (Item item : items) {
-            totalWeight += item.weight;
-        }
-        if (totalWeight > 20) {
-            System.out.println("Too heavy to move.");
-        }
-    }
 }
+
