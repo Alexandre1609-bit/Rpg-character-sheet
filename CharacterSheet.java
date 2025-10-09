@@ -54,7 +54,12 @@ public class CharacterSheet {
     // === Attaque ===
     public void attack(Monster target, int damage, String itemName) {
         System.out.println(this.name + " utilise " + itemName + " !");
-        target.health -= this.damage;
+        if (Math.random() <= 0.1) {
+            target.health -= this.damage * 1.5;
+        } else {
+            target.health -= this.damage;
+        }
+
         if (target.health <= 0) {
             target.dead = true;
             System.out.println(target.name + " is dead");

@@ -17,6 +17,7 @@ public class Item {
     public static List<Item> createItems() {
         List<Item> items = new ArrayList<>();
 
+        //user
         items.add(new Item("Spear", 7));
         items.add(new Item("Bow", 12));
         items.add(new Item("Fist", 3));

@@ -84,6 +84,9 @@ public class Encounter {
             // Augmenter le niveau si besoin
             player.gainLevel();
 
+            // Afficher le loot
+            enemy.dropLoot(player);
+
             return "Victoire ! \nYou've earned " + enemy.xp + " xp !";
         }
     }

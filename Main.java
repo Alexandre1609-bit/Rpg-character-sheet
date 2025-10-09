@@ -53,3 +53,7 @@ public class Main {
 
     }
 }
+
+
+// gestion de loot et d'inventaire
+// ajouter système de sauvegarde (.txt, Gson ??) se renseigner sur le fonctionnement des bases de données pour sauvegarde (veille technolique)

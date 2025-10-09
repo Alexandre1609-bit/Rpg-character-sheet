@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.ArrayList;
 import java.util.Scanner;
 
+
 public class Monster {
     String name;
     int ID;
@@ -11,19 +12,20 @@ public class Monster {
     int health;
     int damage;
     int xp;
-    String loot;
     boolean dead;
+    List<Item> lootTable;
     public static ArrayList<Monster> Bestiary = new ArrayList();
 
-    public Monster(String name, int ID, String comp, int health, int damage, int xp, String loot, boolean dead) {
+
+    public Monster(String name, int ID, String comp, int health, int damage, int xp, boolean dead, List<Item> lootTable) {
         this.name = name;
         this.ID = ID;
         this.attack = comp;
         this.health = health;
         this.damage = damage;
         this.xp = xp;
-        this.loot = loot;
         this.dead = dead;
+        this.lootTable = lootTable;
     }
 
     public Monster(boolean dead) {
@@ -31,9 +33,14 @@ public class Monster {
     }
 
     public static void initBestiary() {
-        createMonster(new Monster("Skeleton", 1, "bite", 50, 5, 500, "bone", false));
-        createMonster(new Monster("Zombie", 2, "claw", 40, 4, 500, "rotten flesh", false));
-        createMonster(new Monster("Dragon", 3, "fireball", 80, 10, 15, "Red skin", false));
+        List<Item> SkeletonLoot = List.of(new Item("Bone", 0), new Item("Gold", 0));
+        List<Item> ZombieLoot = List.of(new Item("Rotten flesh", 0), new Item("Gold", 0));
+        List<Item> DragonLoot = List.of(new Item("Rare gem", 0), new Item("Gold", 0));
+
+
+        createMonster(new Monster("Skeleton", 1, "bite", 50, 5, 500, false, SkeletonLoot));
+        createMonster(new Monster("Zombie", 2, "claw", 40, 4, 500, false, ZombieLoot));
+        createMonster(new Monster("Dragon", 3, "fireball", 80, 10, 15, false, DragonLoot));
     }
 
     public static List<Monster> createMonster(Monster newMst) {
@@ -55,6 +62,7 @@ public class Monster {
         }
         return rtnMst;
     }
+
     public boolean isDead() {
         return dead;
     }
@@ -71,13 +79,17 @@ public class Monster {
     }
 
     public String toString() {
-        return name + " (Attack: " + attack + ", Damage: " + damage + ", XP: " + xp + ", Loot: " + loot + ")";
+        return name + " (Attack: " + attack + ", Damage: " + damage + ", XP: " + xp + "rajouter le drop)";
     }
 
     // Méthode d'attaque
     public void attack(CharacterSheet target, int damage) {
         System.out.println(this.name + " utilise " + this.attack + " !");
-        target.health -= this.damage;
+        if (Math.random() <= 0.1) {
+            target.health -= this.damage * 1.5;
+        } else {
+            target.health -= this.damage;
+        }
         if (target.health <= 0) {
             target.dead = true;
             System.out.println(target.name + " is dead");
@@ -86,4 +98,15 @@ public class Monster {
         }
     }
 
+    public void dropLoot(CharacterSheet player) {
+      Collections.shuffle(this.lootTable);
+      Item rdmItem = this.lootTable.get(0);
+      if (Math.random() < 0.5) {
+          System.out.println("There is nothing to loot from this monster.");
+      } else {
+      player.inventory.addItem(rdmItem);
+          System.out.println("You found " + rdmItem + " !");
+        }
+    }
 }
+
