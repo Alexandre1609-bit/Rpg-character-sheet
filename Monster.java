@@ -82,7 +82,7 @@ public class Monster {
         return name + " (Attack: " + attack + ", Damage: " + damage + ", XP: " + xp + "rajouter le drop)";
     }
 
-    // Méthode d'attaque
+    //attaque
     public void attack(CharacterSheet target, int damage) {
         System.out.println(this.name + " utilise " + this.attack + " !");
         if (Math.random() <= 0.1) {

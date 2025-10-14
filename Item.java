@@ -21,8 +21,7 @@ public class Item {
         items.add(new Item("Spear", 7));
         items.add(new Item("Bow", 12));
         items.add(new Item("Fist", 3));
-        items.add(new Item("bag",0));
-        items.add(new Item("health potion", 0));
+        items.add(new Item("health potion", 7));
         return items;
     }
 

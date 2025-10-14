@@ -3,8 +3,11 @@ import java.util.List;
 import java.util.Scanner;
 
 public class CharacterSheet {
+    private Scanner scanner = new Scanner(System.in);
+
     String name;
     int health;
+    int maxHealth;
     int damage;
     boolean dead;
     Inventory inventory;
@@ -15,9 +18,10 @@ public class CharacterSheet {
     private static CharacterSheet savedPlayer = null;
 
     // Constructeur
-    public CharacterSheet(String name, int health, int damage, boolean dead, int xp, int level) {
+    public CharacterSheet(String name, int health, int maxHealth, int damage, boolean dead, int xp, int level) {
         this.name = name;
         this.health = health;
+        this.maxHealth = maxHealth;
         this.damage = damage;
         this.dead = dead;
         this.inventory = new Inventory(0);
@@ -34,7 +38,7 @@ public class CharacterSheet {
             charList.add(savedPlayer);
         } else {
             // sinon on le crée une seule fois
-            savedPlayer = new CharacterSheet("Alex", 100, 7, false, 0, 1);
+            savedPlayer = new CharacterSheet("Alex", 100, 100, 7, false, 0, 0);
             charList.add(savedPlayer);
         }
 
@@ -51,13 +55,14 @@ public class CharacterSheet {
     public int getDamage() { return damage; }
     public void setDamage(int damage) { this.damage = damage; }
 
-    // === Attaque ===
+    //Attaque
     public void attack(Monster target, int damage, String itemName) {
         System.out.println(this.name + " utilise " + itemName + " !");
         if (Math.random() <= 0.1) {
-            target.health -= this.damage * 1.5;
+            System.out.println("Critical Hit !");
+            target.health -= damage * 1.5;
         } else {
-            target.health -= this.damage;
+            target.health -= damage;
         }
 
         if (target.health <= 0) {
@@ -72,7 +77,7 @@ public class CharacterSheet {
         return name;
     }
 
-    // === Gestion du niveau ===
+    // Gestion des level
     public void gainLevel() {
         int base = 100;
         int xpNeeded = base + (this.level * 50);
@@ -90,4 +95,6 @@ public class CharacterSheet {
     public void getLvlInf() {
         System.out.println("You are currently level " + this.level + " and have " + this.xp + " xp");
     }
+
+
 }

@@ -5,7 +5,7 @@ import java.util.Scanner;
 
 public class Encounter {
 
-    // Scanner pour les choix du joueur
+    // Scanner
     private Scanner scanner = new Scanner(System.in);
 
     // Attributs de l'encounter
@@ -38,19 +38,18 @@ public class Encounter {
         this.spear = items.get(0);
         this.bow = items.get(1);
         this.fist = items.get(2);
-        this.bag = items.get(3);
-        this.healthPotion = items.get(4);
+        this.healthPotion = items.get(3);
 
         // Début du combat au tour du joueur
         this.playerTurn = true;
         this.encounterOver = false;
-        this.fight = true; // tu peux randomiser si tu veux un combat aléatoire
+        this.fight = true; // randomiser un combat aléatoire
     }
 
     // Combat
     public String combat() {
         while (!player.isDead() && !enemy.isDead()) {
-            System.out.println("Choisis ton attaque : 1 : spear , 2 : bow ou 3 : fist");
+            System.out.println("Choose your attack : 1 : spear , 2 : bow, 3 : fist, 4 : health potion");
             int choice = scanner.nextInt();
 
             if (playerTurn) {
@@ -64,8 +63,17 @@ public class Encounter {
                     case 3:
                         player.attack(enemy, fist.damage, fist.itemName);
                         break;
+                    case 4 :
+                        if (player.health == player.maxHealth) {
+                            System.out.println("You are already at maximum health");
+                        } else {
+                            player.health += healthPotion.damage;
+                            if (player.health > player.maxHealth) player.health = player.maxHealth;
+                            System.out.println("You used a health potion! Current HP: " + player.health);
+                        }
+                        break;
                     default:
-                        System.out.println("Choix invalide !");
+                        System.out.println("Invalide choice !");
                 }
                 playerTurn = false; // Passage au tour ennemi
             } else {
@@ -76,7 +84,7 @@ public class Encounter {
 
         // Vérification fin du combat
         if (player.isDead()) {
-            return "Défaite";
+            return "Defeat";
         } else {
             // AJOUTER L'XP AU JOUEUR
             player.xp += enemy.xp;
@@ -87,7 +95,7 @@ public class Encounter {
             // Afficher le loot
             enemy.dropLoot(player);
 
-            return "Victoire ! \nYou've earned " + enemy.xp + " xp !";
+            return "Victory ! \nYou've earned " + enemy.xp + " xp !";
         }
     }
 
