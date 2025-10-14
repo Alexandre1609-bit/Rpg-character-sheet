@@ -2,16 +2,15 @@ RPG Java Console Game
 
 Un petit jeu de rôle (RPG) en console développé en Java, avec système de combat, inventaire, loot et progression de personnage.
 
-** Fonctionnalités** : 
+**Fonctionnalités** : 
 
 - Création de personnage : Un joueur unique avec nom, points de vie, dégâts, expérience et niveau.
 
 - Combat au tour par tour :
-
-  Choix d’attaques : lance, arc, poings.
-  Système de coup critique avec chance aléatoire.
-  Gestion des points de vie des monstres et du joueur.
-  Monstres variés : Squelette, Zombie, Dragon avec points de vie, dégâts...
+    Choix d’attaques : lance, arc, poings.
+    Système de coup critique avec chance aléatoire.
+    Gestion des points de vie des monstres et du joueur.
+    Monstres variés : Squelette, Zombie, Dragon avec points de vie, dégâts...
 
 - Système de loot : Chaque monstre peut dropper des objets différents (os, or, viande, gemme…).
 
@@ -32,7 +31,7 @@ Un petit jeu de rôle (RPG) en console développé en Java, avec système de com
 
 - Préparer une base pour ajouter des fonctionnalités futures (sauvegarde, nouvelles classes d’objets, monstres, etc.).
 
-** Technologies utilisées**
+**Technologies utilisées**
 
 - Java 21
 
@@ -56,7 +55,7 @@ Un petit jeu de rôle (RPG) en console développé en Java, avec système de com
 
 - Inventory.java : gestion de l’inventaire et affichage.
 
-** Améliorations prévues**
+**Améliorations prévues**
 
 - Système de sauvegarde (fichier JSON / TXT / database).
 
