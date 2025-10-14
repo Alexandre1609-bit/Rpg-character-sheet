@@ -21,7 +21,7 @@ Un petit jeu de rôle (RPG) en console développé en Java, avec système de com
 - Progression du personnage : Gain d’expérience et montée de niveau automatique.
 
 
-** Objectifs du projet**
+**Objectifs du projet**
 
 - Pratiquer la programmation orientée objet (OOP) en Java.
 
